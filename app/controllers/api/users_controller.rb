@@ -3,6 +3,18 @@ module Api
   class UsersController < ApplicationController
     include Devise::Controllers::Helpers
 
+    def scores
+      user = User.includes(:scores).find(params[:id])
+
+      render json: {
+        user: {
+          id: user.id,
+          name: user.name,
+          scores: user.scores,
+        }
+      }
+    end
+
     def login
       user = User.find_by('lower(email) = ?', params[:email])
 
